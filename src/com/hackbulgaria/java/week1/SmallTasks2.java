@@ -204,11 +204,34 @@ public class SmallTasks2 {
 	
 	}
 	
+	static boolean is_credit_card_valid(String number) {
+		if (number.length() % 2 == 0) {
+			return false;
+		}
+		int[] numbersOnTheCard = new int[number.length()];
+		char[] carsOnTheCard = number.toCharArray();
+		int sum = 0;
+		int counter = 0;
+				
+		for (int i = number.length(); i > 0; i--) {
+			counter++;
+			sum += (counter % 2 != 0) ? Integer.parseInt(number.substring(i-1, i)) : 2*(Integer.parseInt(number.substring(i-1, i)));
+			
+		}
+		
+		if (sum % 10 == 0) {
+			return true;
+		} else {
+			return false;
+		}
+		
+	}
 	
 	
 	
 	
 	public static void main(String[] args) {
+		System.out.println(is_credit_card_valid("79927398713"));
 		
 		System.out.println(friday_years("1000", "2000"));
 		
