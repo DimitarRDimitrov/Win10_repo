@@ -4,6 +4,7 @@ import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Stack;
 
 import javax.swing.KeyStroke;
@@ -227,30 +228,96 @@ public class SmallTasks2 {
 		
 	}
 	
+	static boolean is_an_bn(String word) {
+		Stack<Character> stack = new Stack<>();
+		if (word.length() == 0) {
+			return true;
+		} else if (word.length() % 2 != 0) {
+			return false; 
+		} else {
+			for(int i = 0; i < word.length(); i++) {
+				if (i < word.length() / 2 && word.charAt(i) == 'a') {
+					continue;
+				} else if (i >= word.length() / 2 && word.charAt(i) == 'b'){
+					continue;
+				} else {
+					return false;
+				}
+			}
+		}
+		return true;
+	}
 	
+	static String reduceFilePath(String input) {
+		Stack<String> stack = new Stack<>();
+		String output = "";
+		for (String s: input.split("([/])")) {
+			if (s.equals(".") || s.equals("")){
+				continue;
+			} else if (s.equals("..")) {
+				stack.pop();
+			} else {
+				stack.add(s);
+			}
+		}
+		while(!stack.isEmpty()) {
+			output = "/" + stack.pop() + output;
+		}
+		return output;
+		
+	}
+	
+	static int zero_insertion(int n) {
+		//constructing it in a reverse way
+		ArrayList<Integer> list = new ArrayList<>();
+		for (int i = n; n > 0; n/=10) {
+			list.add(0, n%10);;
+			
+		}
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < list.size(); i++) {
+			sb.append(list.get(i));
+			if (i < list.size() -1) {
+				if (list.get(i).equals(list.get(i+1))){
+					sb.append("0");
+				} else if (list.get(i) + list.get(i+1) == 10) {
+					sb.append("0");
+				}
+			}
+			
+		}
+		
+		return Integer.valueOf(sb.toString());
+	}
 	
 	
 	public static void main(String[] args) {
-		System.out.println(is_credit_card_valid("79927398713"));
 		
-		System.out.println(friday_years("1000", "2000"));
+		System.out.println(zero_insertion(64346));
+		System.out.println(reduceFilePath("/srv/www/htdocs/wtf/"));
 		
+		System.out.println(is_an_bn("aabb"));
 		
-		int[] myarr = {1, 4, 4, 4, 8, 8, 8, 6, 6, 6, 0, 3, 3, 0, 1, 7, 7, 7, 7, 7, 2, 6, 6, 3, 2};
-		System.out.println(numberToMessage(myarr));
-		messageToNumbers("aabbcc");
-		
-		HashMap<Integer, Character> hm = new HashMap<>();
-	
-		
-		
-		System.out.println(pScore(198));
-		int myInt = 256;
-		System.out.println(Integer.toBinaryString(myInt));
-		System.out.println(isHack(21));
-		System.out.println(nextHack(10));
-		System.out.println(countVowels("AAAAAA"));
-		System.out.println(countConsonants("Github is the second best thing that happend to programmers, after the keyboard!"));
+//		System.out.println(is_credit_card_valid("79927398713"));
+//		
+//		System.out.println(friday_years("1000", "2000"));
+//		
+//		
+//		int[] myarr = {1, 4, 4, 4, 8, 8, 8, 6, 6, 6, 0, 3, 3, 0, 1, 7, 7, 7, 7, 7, 2, 6, 6, 3, 2};
+//		System.out.println(numberToMessage(myarr));
+//		messageToNumbers("aabbcc");
+//		
+//		HashMap<Integer, Character> hm = new HashMap<>();
+//	
+//		
+//		
+//		System.out.println(pScore(198));
+//		int myInt = 256;
+//		System.out.println(Integer.toBinaryString(myInt));
+//		System.out.println(isHack(21));
+//		System.out.println(nextHack(10));
+//		System.out.println(countVowels("AAAAAA"));
+//		System.out.println(countConsonants("Github is the second best thing that happend to programmers, after the keyboard!"));
 		
 	}
 
